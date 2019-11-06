@@ -1,0 +1,35 @@
+version: "3.3"
+
+networks:
+  monitoring:
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3020:3000
+    networks:
+      - monitoring
+  prometheus:
+    image: prom/prometheus:v2.13.1
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+    volumes:
+      - .:/etc/prometheus
+  iad:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ourapp
+    ports:
+      - 8080:8080
+    networks:
+      - monitoring
+

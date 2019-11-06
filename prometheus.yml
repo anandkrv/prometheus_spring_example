@@ -1,0 +1,13 @@
+global:
+  scrape_interval:     15s # taken from https://github.com/prometheus/prometheus/blob/release-2.11/config/testdata/conf.good.yml
+  evaluation_interval: 30s # taken from https://github.com/prometheus/prometheus/blob/release-2.11/config/testdata/conf.good.yml
+
+scrape_configs:
+- job_name: prometheus
+
+  honor_labels: true
+
+  metrics_path: /prometheus
+  static_configs:
+    - targets:
+        - ourapp:8080
